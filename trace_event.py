@@ -55,7 +55,7 @@ def trace_can_enable():
   trace_enable will fail. Regular tracing methods, including
   trace_begin and trace_end, will simply be no-ops.
   """
-  return trace_event_impl != None
+  return trace_event_impl is not None
 
 if trace_event_impl:
   import time

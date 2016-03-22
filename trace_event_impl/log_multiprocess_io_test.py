@@ -17,7 +17,7 @@ class LogMultipleProcessIOTest(TraceTest):
     self.proc = None
 
   def tearDown(self):
-    if self.proc != None:
+    if self.proc is not None:
       self.proc.kill()
 
   # Test that starting a subprocess to record into an existing tracefile works.

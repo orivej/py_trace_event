@@ -55,7 +55,7 @@ def _trace_enable(log_file=None):
     raise TraceException("Tracing control not allowed in child processes.")
   _enabled = True
   global _log_file
-  if log_file == None:
+  if log_file is None:
     if sys.argv[0] == '':
       n = 'trace_event'
     else:
