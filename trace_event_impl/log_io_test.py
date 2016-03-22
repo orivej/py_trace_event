@@ -28,7 +28,7 @@ class LogIOTest(unittest.TestCase):
     self.assertTrue(len(e) > 0)
 
   def test_enable_with_implicit_filename(self):
-    expected_filename = "%s.json" % sys.argv[0]
+    expected_filename = "{0!s}.json".format(sys.argv[0])
     def do_work():
       file = tempfile.NamedTemporaryFile()
       trace_enable()

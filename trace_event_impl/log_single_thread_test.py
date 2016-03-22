@@ -63,7 +63,7 @@ class SingleThreadTest(TraceTest):
     tids = res.findThreadIds()
     self.assertEquals(1, len(tids))
     events = res.findEventsOnThread(tids[0])
-    efmt = ["%s %s" % (e["ph"], e["name"]) for e in events]
+    efmt = ["{0!s} {1!s}".format(e["ph"], e["name"]) for e in events]
     self.assertEquals(
       ["B func1",
        "B func2",
