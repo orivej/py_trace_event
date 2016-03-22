@@ -15,7 +15,7 @@ class ParsedTraceEvents(object):
     """
     if trace_filename and events:
       raise Exception("Provide either a trace file or event list")
-    if not trace_filename and events == None:
+    if not trace_filename and events is None:
       raise Exception("Provide either a trace file or event list")
 
     if trace_filename:
