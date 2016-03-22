@@ -24,7 +24,9 @@ class ProcessSubclass(_RealProcess):
     return r
 
 class ProcessShim():
-  def __init__(self, group=None, target=None, name=None, args=(), kwargs={}):
+  def __init__(self, group=None, target=None, name=None, args=(), kwargs=None):
+    if kwargs is None:
+      kwargs = {}
     self._proc = ProcessSubclass(self, group, target, name, args, kwargs)
     # hint to testing code that the shimming worked
     self._shimmed_by_trace_event = True
