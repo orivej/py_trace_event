@@ -60,11 +60,11 @@ def _trace_enable(log_file=None):
       n = 'trace_event'
     else:
       n = sys.argv[0]
-    log_file = open("%s.json" % n, "ab", False)
-    _note("trace_event: tracelog name is %s.json" % n)
+    log_file = open("{0!s}.json".format(n), "ab", False)
+    _note("trace_event: tracelog name is {0!s}.json".format(n))
   elif isinstance(log_file, basestring):
-    _note("trace_event: tracelog name is %s" % log_file)
-    log_file = open("%s" % log_file, "ab", False)
+    _note("trace_event: tracelog name is {0!s}".format(log_file))
+    log_file = open("{0!s}".format(log_file), "ab", False)
   elif not hasattr(log_file, 'fileno'):
     raise TraceException("Log file must be None, a string, or a file-like object with a fileno()")
 
@@ -85,7 +85,7 @@ def _trace_enable(log_file=None):
          "pid": os.getpid(), "tid": threading.current_thread().ident,
          "ts": time.time(),
          "name": "process_argv", "args": {"argv": sys.argv}}
-    _log_file.write("%s\n" % json.dumps(x))
+    _log_file.write("{0!s}\n".format(json.dumps(x)))
   else:
     _note("trace_event: Opened existing tracelog")
   _log_file.flush()

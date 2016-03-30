@@ -58,9 +58,9 @@ def traced(*args):
           return default
 
       if is_method:
-        name = "%s.%s" % (args[0].__class__.__name__, func.__name__)
+        name = "{0!s}.{1!s}".format(args[0].__class__.__name__, func.__name__)
       else:
-        name = "%s.%s" % (func.__module__, func.__name__)
+        name = "{0!s}.{1!s}".format(func.__module__, func.__name__)
 
       # Be sure to repr before calling func, because the argument values may change.
       arg_values = {

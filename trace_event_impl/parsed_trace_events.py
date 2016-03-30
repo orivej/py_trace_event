@@ -40,7 +40,7 @@ class ParsedTraceEvents(object):
       try:
         events = json.loads(t)
       except ValueError:
-        raise Exception("Corrupt trace, did not parse. Value: %s" % t)
+        raise Exception("Corrupt trace, did not parse. Value: {0!s}".format(t))
 
       if 'traceEvents' in events:
         events = events['traceEvents']
@@ -61,7 +61,7 @@ class ParsedTraceEvents(object):
     self.events[i] = v
 
   def __repr__(self):
-    return "[%s]" % ",\n ".join([repr(e) for e in self.events])
+    return "[{0!s}]".format(",\n ".join([repr(e) for e in self.events]))
 
   def findProcessIds(self):
     if self.pids:
