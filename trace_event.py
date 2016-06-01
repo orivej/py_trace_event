@@ -60,30 +60,20 @@ def trace_can_enable():
 if trace_event_impl:
   import time
 
-  def trace_is_enabled():
-    return trace_event_impl.trace_is_enabled()
-
-  def trace_enable(logfile):
-    return trace_event_impl.trace_enable(logfile)
-
-  def trace_disable():
-    return trace_event_impl.trace_disable()
-
-  def trace_flush():
-    trace_event_impl.trace_flush()
-
-  def trace_begin(name, **kwargs):
-    args_to_log = {key: repr(value) for key, value in kwargs.iteritems()}
-    trace_event_impl.add_trace_event("B", time.time(), "python", name, args_to_log)
-
-  def trace_end(name):
-    trace_event_impl.add_trace_event("E", time.time(), "python", name)
-
-  def trace(name, **kwargs):
-    return trace_event_impl.trace(name, **kwargs)
-
-  def traced(fn):
-    return trace_event_impl.traced(fn)
+  from trace_event_impl import (
+    TraceException,
+    trace_is_enabled,
+    trace_enable,
+    trace_disable,
+    trace_flush,
+    trace_begin,
+    trace_end,
+    trace,
+    traced,
+    trace_async_begin,
+    trace_async_instant,
+    trace_async_end,
+  )
 
 else:
   import contextlib

@@ -81,7 +81,7 @@ def _trace_enable(log_file=None):
     tid = threading.current_thread().ident
     if not tid:
       tid = os.getpid()
-    x = {"ph": "M", "category": "process_argv",
+    x = {"ph": "M", "cat": "process_argv",
          "pid": os.getpid(), "tid": threading.current_thread().ident,
          "ts": time.time(),
          "name": "process_argv", "args": {"argv": sys.argv}}
@@ -136,7 +136,7 @@ def trace_is_enabled():
   return _enabled
 
 @_locked
-def add_trace_event(ph, ts, category, name, args=None):
+def add_trace_event(ph, ts, cat, name, args=None, kwargs=None):
   global _enabled
   if not _enabled:
     return
@@ -155,16 +155,30 @@ def add_trace_event(ph, ts, category, name, args=None):
 
   if ts:
     ts = 1000000 * ts
-  _cur_events.append({"ph": ph, "category": category,
-                      "pid": _tls.pid, "tid": _tls.tid,
-                      "ts": ts,
-                      "name": name, "args": args or {}});
 
-def trace_begin(name, args=None):
-  add_trace_event("B", time.time(), "python", name, args)
+  ev = {"ph": ph, "ts": ts, "cat": cat, "name": name,
+        "pid": _tls.pid, "tid": _tls.tid,
+        }
+  if args:
+    ev["args"] = args
+  if kwargs:
+    ev.update(kwargs)
+  _cur_events.append(ev);
 
-def trace_end(name, args=None):
-  add_trace_event("E", time.time(), "python", name, args)
+def trace_begin(name, args=None, category="python"):
+  add_trace_event("B", time.time(), category, name, args)
+
+def trace_end(name, args=None, category="python"):
+  add_trace_event("E", time.time(), category, name, args)
 
 def _trace_disable_atexit():
   trace_disable()
+
+def trace_async_begin(name, id, args=None, category="python"):
+  add_trace_event("b", time.time(), category, name, args, {"id": id})
+
+def trace_async_instant(name, id, args=None, category="python"):
+  add_trace_event("n", time.time(), category, name, args, {"id": id})
+
+def trace_async_end(name, id, args=None, category="python"):
+  add_trace_event("e", time.time(), category, name, args, {"id": id})
